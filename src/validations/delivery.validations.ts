@@ -16,9 +16,9 @@ export const addDeliveryValidation = {
         delivery_id: Joi.string().regex(guidRegex),
         package_id: Joi.string().required().regex(guidRegex),
         pickup_time: Joi.date().timestamp(),
-        start_time: Joi.date().timestamp().required(),
+        start_time: Joi.date().timestamp(),
         end_time:Joi.date().timestamp(),
-        location:locationValidation.required(),
+        location:locationValidation,
         status: Joi.string().valid(...validStatus)
     })
 }

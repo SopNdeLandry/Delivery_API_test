@@ -10,7 +10,6 @@ const { specs, swaggerUi } = require('../swagger');
 const { packageRouter , deliveryRouter} = require('./routes/v1');
 //const  rateLimiter = require('./middleware/rateLimiter');
 
-//import isAuth from './middleware/isAuth';
 //import { errorHandler } from './middleware/errorHandler';
 //import config from './config/config';
 //import { xssMiddleware } from './middleware/xssMiddleware';
@@ -18,7 +17,6 @@ const { packageRouter , deliveryRouter} = require('./routes/v1');
 
 const app = express();
 //app.use(rateLimiter);
-//const publicDirectoryPath = path.join(path.join(__dirname,'./public'),'/public');
 const publicDirectoryPath = path.join(__dirname,'/public');
 
 app.use(express.static(publicDirectoryPath));

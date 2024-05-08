@@ -71,6 +71,8 @@ export const updatedDelivery = async (req: Request, res: Response) => {
 }
 
 export const deleteDelivery = async (req: Request, res: Response) => {
+    //Delete Delivery create some problem Manage the case were delivery is link to package.
+    //Manage the case where delivery is stored in Redis 
     try {
         // @ts-ignore
         const deletedDeliveryId = await deliveryService.deleteDelivery(req.params['id']);

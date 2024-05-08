@@ -24,15 +24,15 @@ export const getPackageById = async (req: Request, res: Response) => {
     try {
         //@ts-ignore
         const packageObj = await packageRedisService.getPackageFromRedis(package_id);
-        if(packageObj?.package_id){
+        if (packageObj?.package_id) {
             return res.json(packageObj);
         }
         const foundPackage = await packageService.getPackageById(package_id);
-        if(foundPackage?.package_id){
-           return res.json(foundPackage);
+        if (foundPackage?.package_id) {
+            return res.json(foundPackage);
         }
         res.status(httpStatus.BAD_REQUEST).json({
-            message:'package not found'
+            message: 'package not found'
         })
     } catch (error) {
         console.error(error);
@@ -52,14 +52,14 @@ export const getAllPackage = async (req: Request, res: Response) => {
 }
 
 export const updatePackage = async (req: Request, res: Response) => {
-        const id = req.params['id'];
-        const packagesForUpdate = Object.assign({},{package_id:id},req.body);
+    const id = req.params['id'];
+    const packagesForUpdate = Object.assign({}, { package_id: id }, req.body);
     try {
         const updatedPackages = await packageService.updatePackage(packagesForUpdate);
-        if(updatedPackages?.package_id){
+        if (updatedPackages?.package_id) {
             return res.json(updatedPackages);
         }
-        return res.status(400).json({message:'fail request'});
+        return res.status(400).json({ message: 'fail request' });
     } catch (error) {
         console.error(error);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR);
@@ -67,14 +67,16 @@ export const updatePackage = async (req: Request, res: Response) => {
 }
 
 export const deletePackage = async (req: Request, res: Response) => {
+    //Delete package create some problem Manage the case were Package is link to Delivery.
+    //Manage the case where package is stored in Redis 
     const package_id = req.params['id'];
     try {
         // @ts-ignore
         const deletedPackages = await packageService.deletePackage(package_id);
-        if(deletedPackages?.package_id){
-            return res.json({message:'package delete'});
+        if (deletedPackages?.package_id) {
+            return res.json({ message: 'package delete' });
         }
-        return res.status(400).json({message:'fail request'});
+        return res.status(400).json({ message: 'fail request' });
     } catch (error) {
         console.error(error);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR);

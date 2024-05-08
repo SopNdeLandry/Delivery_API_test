@@ -9,9 +9,9 @@ export interface IDelivery {
     delivery_id: string; //guid
     package_id: string; //guid
     pickup_time?: Date;
-    start_time: Date; 
-    end_time?:Date; 
-    location:Location;
+    start_time: Date;
+    end_time?: Date;
+    location: Location;
     status?: 'open' | 'picked-up' | 'in-transit' | 'delivered' | 'failed'
 }
 
@@ -21,40 +21,40 @@ export interface IDelivery {
 
 const deliverySchema = new Schema<IDelivery>({
     delivery_id: {
-        type:String, 
-        required: true , 
-        unique:true,
-        validate:{
-            validator:(v:string)=>{
+        type: String,
+        required: true,
+        unique: true,
+        validate: {
+            validator: (v: string) => {
                 return Guid.isValid(v);
             },
-            message:(props)=> `${props.value} is not a valid id`
+            message: (props) => `${props.value} is not a valid id`
         }
     },
     package_id: {
-        type:String, 
-        required: true, 
-        validate:{
-            validator:(v:string)=>{
+        type: String,
+        required: true,
+        validate: {
+            validator: (v: string) => {
                 return Guid.isValid(v);
             },
-            message:(props)=> `${props.value} is not a valid id`
+            message: (props) => `${props.value} is not a valid id`
         }
     },
-    pickup_time: {type:Date,min: timestamp  },
-    start_time: {type:Date, required:true, min:timestamp},
-    end_time:{type:Date,min:timestamp},
-    location:{
-        lon:{type:Number, required:true},
-        lat:{type: Number, required:true}
+    pickup_time: { type: Date, min: timestamp },
+    start_time: { type: Date, min: timestamp },
+    end_time: { type: Date, min: timestamp },
+    location: {
+        lon: { type: Number },
+        lat: { type: Number }
     },
-    status:{
-        type:String,
-        enum:['open', 'picked-up', 'in-transit' , 'delivered', 'failed' ],
-        require:true,
-        default:'open'
+    status: {
+        type: String,
+        enum: ['open', 'picked-up', 'in-transit', 'delivered', 'failed'],
+        require: true,
+        default: 'open'
     }
-},{ timestamps: true });
+}, { timestamps: true });
 
 const Delivery = model<IDelivery>('Delivery', deliverySchema);
 
